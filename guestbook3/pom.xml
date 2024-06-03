@@ -51,6 +51,6 @@
 		</dependency>		
 	</dependencies>
 	<build>
-		<finalName>guestbook33</finalName>
+		<finalName>guestbook3</finalName>
 	</build>
 </project>
