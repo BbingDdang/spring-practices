@@ -4,23 +4,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.poscodx.guestbook.repository.template.JdbcContext;
 import com.poscodx.guestbook.vo.GuestbookVo;
 
 @Repository
-public class GuestbookRepository {
-	private JdbcContext jdbcContext;
-
-	public GuestbookRepository(JdbcContext jdbcContext) {
-		this.jdbcContext = jdbcContext;
+public class GuestbookRepositoryWithJdbcTemplate {
+	private JdbcTemplate jdbcTemplate;
+	
+	public GuestbookRepositoryWithJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
-	
 	public List<GuestbookVo> findAll() {
-		return jdbcContext.query(
+		return jdbcTemplate.query(
 				"select no, name, password, contents, reg_date from guestbook order by reg_date desc",
 				new RowMapper<GuestbookVo>() {
 
@@ -35,23 +34,21 @@ public class GuestbookRepository {
 						return vo;
 					}}
 				);
-		
 	}
 	
 	public int insert(GuestbookVo vo) {
-		return jdbcContext.update(
-				"insert into guestbook values(null, ?, ?, ?, now())",
-				new Object[] {vo.getName(), vo.getPassword(), vo.getContents()});
+		return jdbcTemplate.update(
+				"insert into guestbook values(null, ?, ?, ?, date_format(now(), '%Y/%m/%d %H:%i:%s'))",
+				new Object[] {vo.getName(), vo.getPassword(), vo.getContents()}
+				);
 	}
-
 	
 	public int deleteByNoAndPassword(Long no, String password) {
-		return jdbcContext.update(
+		return jdbcTemplate.update(
 				"delete from guestbook where no = ? and password = ?",
 				new Object[] {no, password}
 				);
 
 	}
-
 	
 }

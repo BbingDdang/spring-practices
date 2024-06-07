@@ -23,24 +23,24 @@
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td>${fn:replace(fn:replace(title, ">", "&gt;"), "<", "&lt;") }</td>
+						<td>${fn:replace(fn:replace(vo.title, ">", "&gt;"), "<", "&lt;") }</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-								${fn:replace(fn:replace(fn:replace(contents, ">", "&gt;"), "<", "&lt;"), newline, "<br>")}
+								${fn:replace(fn:replace(fn:replace(vo.contents, ">", "&gt;"), "<", "&lt;"), newline, "<br>")}
 							</div>
 						</td>
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board?p=${currentPage}">글목록</a>
+					<a href="${pageContext.request.contextPath }/board?p=${page}&kwd=${keyword}">글목록</a>
 					<c:if test="${sessionScope.authUser.no eq boardVo.userNo}">
-						<a href="${pageContext.request.contextPath }/board?a=modifyform&no=${param.no}">글수정</a>
+						<a href="${pageContext.request.contextPath }/board/modifyform?no=${param.no}">글수정</a>
 					</c:if>
 					<c:if test="${not empty sessionScope.authUser }">
-						<a href="${pageContext.request.contextPath }/board?a=replyform&no=${param.no}">답글달기</a>
+						<a href="${pageContext.request.contextPath }/board/replyform?no=${param.no}">답글달기</a>
 					</c:if>
 				</div>
 			</div>
