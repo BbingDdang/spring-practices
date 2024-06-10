@@ -49,7 +49,7 @@
 					        <td>${vo.hit}</td>
 					        <td>${vo.reg_date}</td>
 					        <c:if test="${sessionScope.authUser.no eq vo.userNo}">
-					        	<td><a href="${pageContext.request.contextPath}/board/delete/no/${vo.no}" class="del">삭제</a></td>
+					        	<td><a href="${pageContext.request.contextPath}/board/delete?no=${vo.no}" class="del">삭제</a></td>
 					        </c:if>	
 					    </tr>
 					</c:forEach>
@@ -58,23 +58,30 @@
 				<div class="pager">
 					<ul>
 						<c:choose>
-					    	<c:when test="${1 eq currentPage }">
+							<c:when test="${param.p eq null }">
+					    		<li>◀◀</li> <!-- Link to next page -->
+					    		<li>◀</li> <!-- Link to next page -->	
+							</c:when>
+					    	<c:when test="${1 eq param.p }">
 					    		<li>◀◀</li> <!-- Link to next page -->
 					    		<li>◀</li> <!-- Link to next page -->	
 					    	</c:when>
 					    	<c:otherwise>
-					    		<li><a href="/p/${1 }/kwd/${keyword }">◀◀</a></li> <!-- Link to previous page -->
-								<li><a href="/p/${Math.max(1, currentPage - 1) }/kwd/${keyword }">◀</a></li> <!-- Link to previous page -->
+					    		<li><a href="${pageContext.request.contextPath}/board?p=${1 }&kwd=${keyword }">◀◀</a></li> <!-- Link to previous page -->
+								<li><a href="${pageContext.request.contextPath}/board?p=${Math.max(1, param.p - 1) }&kwd=${keyword }">◀</a></li> <!-- Link to previous page -->
 					    	</c:otherwise>
 					    </c:choose> 
 						
 					        <c:forEach var="item" items="${entry }">
 					            <c:choose>
-					                <c:when test="${item.pageNo == currentPage}">
+					            	<c:when test="${param.p == null} ">
+					                    <li class="selected">${1 }</li> <!-- Current page -->
+					            	</c:when>
+					                <c:when test="${item.pageNo == param.p}">
 					                    <li class="selected">${item.pageNo}</li> <!-- Current page -->
 					                </c:when>
 					                <c:when test="${item.active eq true }">
-					                	<li><a href="/p/${item.pageNo}/kwd/${keyword }">${item.pageNo}</a></li>
+					                	<li><a href="${pageContext.request.contextPath}/board?p=${item.pageNo}&kwd=${keyword }">${item.pageNo}</a></li>
 					                </c:when>
 					                <c:otherwise>
 										<li>${item.pageNo }</li>					                    
@@ -82,13 +89,13 @@
 					            </c:choose>
 					        </c:forEach>
 					    <c:choose>
-					    	<c:when test="${totalPage eq currentPage }">
+					    	<c:when test="${totalPage eq param.p }">
 					    		<li>▶</li> <!-- Link to next page -->
 					    		<li>▶▶</li> <!-- Link to next page -->	
 					    	</c:when>
 					    	<c:otherwise>
-					    		<li><a href="/p/${Math.min(totalPage, currentPage + 1) }/kwd/${keyword }">▶</a></li> <!-- Link to next page -->
-					    		<li><a href="/p/${totalPage }/kwd/${keyword }">▶▶</a></li> <!-- Link to next page -->
+					    		<li><a href="${pageContext.request.contextPath}/board?p=${Math.min(totalPage, param.p + 1) }&kwd=${keyword }">▶</a></li> <!-- Link to next page -->
+					    		<li><a href="${pageContext.request.contextPath}/board?p=${totalPage }&kwd=${keyword }">▶▶</a></li> <!-- Link to next page -->
 					    	</c:otherwise>
 					    </c:choose> 
 					</ul>
@@ -97,7 +104,7 @@
 				
 				<div class="bottom">
 					<c:if test="${not empty sessionScope.authUser }">
-						<a href="${pageContext.servletContext.contextPath }/board/addform" id="new-book">글쓰기</a>
+						<a href="${pageContext.servletContext.contextPath }/board/add" id="new-book">글쓰기</a>
 					</c:if>
 				</div>
 			</div>

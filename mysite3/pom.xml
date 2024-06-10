@@ -29,6 +29,13 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
+		<!-- Spring aspect -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		
 		<!-- Common DBCP -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>

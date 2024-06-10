@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
@@ -12,23 +13,13 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 	
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/user/**"/>
-			<bean class="com.poscodx.hellospring.interceptor.MyInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
+	<!-- auto proxy -->
+	<aop:aspectj-autoproxy/>
 	
 	<context:annotation-config />
-
-	<context:component-scan base-package="com.example.springex">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Repository" />
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Service" />
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Component" />			
+	<context:component-scan base-package="com.poscodx.aoptest.service, com.poscodx.aoptest.aspect">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />			
 	</context:component-scan>
-
-
 </beans>

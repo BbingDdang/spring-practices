@@ -22,13 +22,15 @@ public class BoardRepository {
 	// reply
 	public int updateOrderNo(BoardVo vo) {
 		return sqlSession.update("board.updateOrderNo", vo);
-//				PreparedStatement pstmt1 = conn.prepareStatement("update board set o_no = o_no+1 where g_no = ? and o_no >=?");
-//				PreparedStatement pstmt2 = conn.prepareStatement("insert into board values(null, ?, ?, 0, now(), ?, ?, ?, ?)");
 	}
-	public int insertReply(BoardVo vo) {
-		return sqlSession.insert("board.insertReply", vo);
+	public int insertReply(BoardVo vo, Long parentNo) {
+		return sqlSession.insert("board.insertReply", Map.of("vo", vo, "parentNo", parentNo));
 	}
 	////////////////////////////////////////////////////////////////////////
+	
+	public BoardVo findAllByNo(Long no) {
+		return sqlSession.selectOne("board.findAllByNo", no);
+	}
 	
 	public int update(BoardVo vo) {
 		return sqlSession.update("board.update", vo);
@@ -39,20 +41,20 @@ public class BoardRepository {
 	
 	}
 
-	public List<BoardVo> findGnoOnoDepthByNo(Long no) {
-		return sqlSession.selectOne("board.findGnoOnoDepthByNo");
+	public BoardVo findGnoOnoDepthByNo(Long no) {
+		return sqlSession.selectOne("board.findGnoOnoDepthByNo", no);
 	}
 	
-	public String findTitleByNo(Long no) {
-		return sqlSession.selectOne("board.findTitleByNo", no);
-	}
+//	public BoardVo findTitleByNo(Long no) {
+//		return sqlSession.selectOne("board.findTitleByNo", no);
+//	}
 	
 	public Long findUserNoByNo(Long no) {
 		return sqlSession.selectOne("board.findUserNoByNo", no);
 	}
 	
-	public BoardVo findContentsByNo(Long no) {
-		return sqlSession.selectOne("board.findContentsByNo", no);
+	public BoardVo findTitleAndContentsByNo(Long no) {
+		return sqlSession.selectOne("board.findTitleAndContentsByNo", no);
 	}
 	
 	public int deleteByNo(Long no) {

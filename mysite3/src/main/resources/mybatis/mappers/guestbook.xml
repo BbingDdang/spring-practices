@@ -10,7 +10,7 @@
 	</select>
 	<insert id = "insert" parameterType = "guestbookvo" >
 		<![CDATA[
-			insert 
+			insert
 			into guestbook 
 			values(null, #{name }, #{password }, #{contents }, now())
 		]]>

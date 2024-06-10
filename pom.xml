@@ -9,5 +9,6 @@
   	<module>emaillist3</module>
   	<module>guestbook3</module>
   	<module>mysite3</module>
+  	<module>aoptest</module>
   </modules>
 </project>

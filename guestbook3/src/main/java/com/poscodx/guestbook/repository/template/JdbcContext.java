@@ -69,17 +69,16 @@ public class JdbcContext {
 				result.add(e);
 			}
 		} catch (SQLException e) {
-			System.out.println("Error:" + e);
+			throw new RuntimeException(e);
 		} finally {
 			try {
 				if(pstmt != null) {
 					pstmt.close();
 				}
 				if(conn != null) {
-					conn.close();
+					DataSourceUtils.releaseConnection(conn, dataSource);
 				}
-			} catch(SQLException e) {
-				System.out.println("Error:" + e);
+			} catch(SQLException ignored) {
 			}
 		}
 		
@@ -96,17 +95,16 @@ public class JdbcContext {
 			pstmt = statementStrategy.makeStatement(conn);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("Error:" + e);
+			throw new RuntimeException(e);
 		} finally {
 			try {
 				if(pstmt != null) {
 					pstmt.close();
 				}
 				if(conn != null) {
-					conn.close();
+					DataSourceUtils.releaseConnection(conn, dataSource);
 				}
-			} catch(SQLException e) {
-				System.out.println("Error:" + e);
+			} catch(SQLException ignored) {
 			}
 		}
 		

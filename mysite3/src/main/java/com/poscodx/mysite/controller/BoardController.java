@@ -1,13 +1,12 @@
 package com.poscodx.mysite.controller;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,49 +23,78 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	@GetMapping
+	@RequestMapping
 	public String index(Model model, @RequestParam(value="p", defaultValue = "1", required=false) Long page, @RequestParam(value="kwd",required=false) String keyword) {
-		List<BoardVo> list = null;
+		Map<String, Object> map = null;
+		
 		if (keyword == null || keyword == "") {
-			list = boardService.getContentsList(page);
+			map = boardService.getContentsList(page);
 		}
 		else {
-			list = boardService.getContentsList(page, keyword);
+			map = boardService.getContentsList(page, keyword);
 		}
-		System.out.println(list);
 		model.addAttribute("page", page);
 		model.addAttribute("keyword", keyword);
-		model.addAttribute("list", list);
+		model.addAllAttributes(map);
 		return "board/list";
 	}
 	
-	@PostMapping("/add")
-	public String add(BoardVo vo) {
-		boardService.addContents(vo);
-		return "";
+	@GetMapping("/add")
+	public String add() {
+		return "board/write";
 	}
 	
-	@DeleteMapping("/delete/{no}")
-	public String delete(HttpSession session, @PathVariable("no") Long no) { 
+	@PostMapping("/add")
+	public String add(HttpSession session, BoardVo vo, @RequestParam(value = "no", required=false) Long parentNo) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		vo.setUserNo(authUser.getNo());
+		if (parentNo == null) {
+			boardService.addContents(vo);
+			System.out.println(vo + "after add");
+		}
+		else {
+			boardService.addReplies(vo, parentNo);
+			System.out.println("reply");
+		}
+		return "redirect:/board";
+	}
+	
+	@GetMapping("/delete")
+	public String delete(HttpSession session, @RequestParam(value = "no") Long no) { 
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
-			return "redirect:/";
+			return "redirect:/board";
 		}
+		boardService.deleteContents(no, authUser.getNo());
 		
-		return "";
+		return "redirect:/board";
 	}
 	
-	public String modify() {
-		return "";
+	@GetMapping("/modify/{no}")
+	public String modify(@PathVariable("no") Long no) {
+		return "board/modify";
 	}
 	
-	public String reply() {
-		return "";
+	@PostMapping("/modify/{no}")
+	public String modify(HttpSession session, @PathVariable("no") Long no, BoardVo vo) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if(authUser == null) {
+			return "redirect:/board";
+		}
+		boardService.updateContents(vo);
+		return "redirect:/board";
+		
+	}
+	@GetMapping("/reply")
+	public String reply(@RequestParam(value = "no") Long parentNo, Model model) {
+		model.addAttribute("no", parentNo);
+		return "board/reply";
 	}
 	
 	@GetMapping("/view/{no}")
 	public String view(@PathVariable("no") Long no, @RequestParam(value="p") Long page, @RequestParam(value="kwd", required=false) String keyword,Model model) {
-		BoardVo vo = boardService.getContents(no);
+		BoardVo vo = boardService.getAll(no);
+		model.addAttribute("no", no);
 		model.addAttribute("page", page);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("vo", vo);

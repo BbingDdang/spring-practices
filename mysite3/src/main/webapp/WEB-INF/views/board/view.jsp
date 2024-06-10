@@ -36,11 +36,11 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/board?p=${page}&kwd=${keyword}">글목록</a>
-					<c:if test="${sessionScope.authUser.no eq boardVo.userNo}">
-						<a href="${pageContext.request.contextPath }/board/modifyform?no=${param.no}">글수정</a>
+					<c:if test="${sessionScope.authUser.no eq vo.userNo}">
+						<a href="${pageContext.request.contextPath }/board/modify/${no}">글수정</a>
 					</c:if>
 					<c:if test="${not empty sessionScope.authUser }">
-						<a href="${pageContext.request.contextPath }/board/replyform?no=${param.no}">답글달기</a>
+						<a href="${pageContext.request.contextPath }/board/reply?no=${no}">답글달기</a>
 					</c:if>
 				</div>
 			</div>
