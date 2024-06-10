@@ -12,12 +12,6 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 	
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/user/**"/>
-			<bean class="com.poscodx.hellospring.interceptor.MyInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
 	
 	<context:annotation-config />
 

@@ -10,23 +10,21 @@ public class MyInterceptor implements HandlerInterceptor{
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+		throws Exception {
 		System.out.println("MyInterceptor.preHandle(..) called");
 //		return HandlerInterceptor.super.preHandle(request, response, handler);
-		return true;
+		return false;
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
+		ModelAndView modelAndView) throws Exception {
 		System.out.println("MyInterceptor.postHandle(..) called");
-		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
+		throws Exception {
 		System.out.println("MyInterceptor.afterCompletion(..) called");
-		HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
 }
