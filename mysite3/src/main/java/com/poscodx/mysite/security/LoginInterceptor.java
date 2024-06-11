@@ -35,6 +35,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 			return false;
 		}
 		// login process
+		System.out.println(authUser);
 		HttpSession session = request.getSession(true);
 		session.setAttribute("authUser", authUser);
 		

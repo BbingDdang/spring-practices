@@ -24,7 +24,7 @@ public class BoardService {
 		for (int i = 1; i <= 5;i++) {
 			PageInfo pageInfo = new PageInfo();
 			pageInfo.setPageNo(i + base*5);
-			pageInfo.setActive(i + base*5 <= totalPage);
+			pageInfo.setActive(i + base*5 <= totalPage);	
 			entry.add(pageInfo);
 		}
 		

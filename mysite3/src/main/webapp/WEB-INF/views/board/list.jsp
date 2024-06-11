@@ -58,10 +58,6 @@
 				<div class="pager">
 					<ul>
 						<c:choose>
-							<c:when test="${param.p eq null }">
-					    		<li>◀◀</li> <!-- Link to next page -->
-					    		<li>◀</li> <!-- Link to next page -->	
-							</c:when>
 					    	<c:when test="${1 eq param.p }">
 					    		<li>◀◀</li> <!-- Link to next page -->
 					    		<li>◀</li> <!-- Link to next page -->	

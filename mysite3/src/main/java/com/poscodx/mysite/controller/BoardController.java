@@ -27,16 +27,18 @@ public class BoardController {
 	@RequestMapping
 	public String index(Model model, @RequestParam(value="p", defaultValue = "1", required=false) Long page, @RequestParam(value="kwd",required=false) String keyword) {
 		Map<String, Object> map = null;
-		
+
 		if (keyword == null || keyword == "") {
 			map = boardService.getContentsList(page);
 		}
 		else {
 			map = boardService.getContentsList(page, keyword);
 		}
+		
 		model.addAttribute("page", page);
 		model.addAttribute("keyword", keyword);
 		model.addAllAttributes(map);
+		
 		return "board/list";
 	}
 	

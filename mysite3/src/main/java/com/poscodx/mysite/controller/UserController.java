@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.poscodx.mysite.security.Auth;
+import com.poscodx.mysite.security.AuthUser;
 import com.poscodx.mysite.service.UserService;
 import com.poscodx.mysite.vo.UserVo;
 
@@ -57,20 +59,23 @@ public class UserController {
 // 		
 // 		return "redirect:/";
 // 	}
- 	
+ 	@Auth(role="ADMIN")
  	@RequestMapping(value = "/update", method = RequestMethod.GET)
- 	public String update(HttpSession session, Model model) {
- 		UserVo authUser = (UserVo)session.getAttribute("authUser");
+ 	public String update(@AuthUser UserVo authUser, Model model) {
+ 		//@AuthUser UserVo authUser
+ 		//UserVo authUser = (UserVo)session.getAttribute("authUser");
  		
- 		if (authUser == null) {
- 			return "redirect:/"; 
- 		}
+// 		if (authUser == null) {
+// 			return "redirect:/"; 
+// 		}
  		
  		UserVo vo = userService.getUser(authUser.getNo());
  		model.addAttribute("userVo", vo);
+ 		
  		return "user/update";
  	}
  	
+ 	@Auth
  	@RequestMapping(value = "/update", method = RequestMethod.POST)
  	public String update(HttpSession session, UserVo vo) {
  		// access control
