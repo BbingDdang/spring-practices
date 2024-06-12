@@ -1,4 +1,4 @@
-package fileupload.service;
+package com.poscodx.mysite.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FileUploadService {
 	private static String SAVE_PATH = "/Users/imbyeongjun/mysite-uploads";
-	private static String URL_PATH = "/assets/upload-images";
+	private static String URL_PATH = "/images";
 	
 	public String restore(MultipartFile file) {
 		String url = null;
