@@ -21,4 +21,8 @@ public class SiteService {
 	public void updateSite(SiteVo vo) {
 		siteRepository.update(vo);
 	}
+
+	public void deleteGuestbook(Long no) {
+		siteRepository.deleteGuestbookByNo(no);
+	}
 }

@@ -20,4 +20,8 @@ public class SiteRepository {
 	public SiteVo find() {
 		return sqlSession.selectOne("site.find");
 	}
+
+	public void deleteGuestbookByNo(Long no) {
+		sqlSession.delete("site.deleteGuestbookByNo", no);
+	}
 }

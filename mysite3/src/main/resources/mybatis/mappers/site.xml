@@ -21,4 +21,13 @@
 	     where no = 1       	
 		]]>
 	</update>
+	
+	<delete id = "deleteGuestbookByNo" parameterType = "long">
+		<![CDATA[
+			delete 
+			from guestbook 
+			where no = #{no} 
+		]]>	
+	</delete>
+	
 </mapper>

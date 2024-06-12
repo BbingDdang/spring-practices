@@ -14,6 +14,14 @@
 			]]>
 		</selectKey>
 	</insert>
+	<select id="findAll" resultType="uservo">
+		<![CDATA[	
+			select no, name, email, gender, join_date as joinDate, role
+			from user
+			order by no
+		]]>
+	</select>
+	
 	<select id = "findByEmailAndPassword" parameterType = "map" resultType = "uservo">
 	<![CDATA[	
 		select no, name, role

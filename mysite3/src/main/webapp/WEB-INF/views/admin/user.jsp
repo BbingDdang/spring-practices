@@ -16,7 +16,21 @@
 			<div id="content">
 				<div id="site-form">
 					
-					<h2>사용자 관리 페이지</h2>				
+					<h2>사용자 관리 페이지</h2>	
+					<ul>
+						<c:forEach var="vo" items="${list}" varStatus="status">
+							<table>
+								<tr>
+									<td>[${fn:length(list) - status.index}]</td>
+									<td>${fn:replace(fn:replace(vo.name, ">", "&gt;"), "<", "&lt;")}</td>
+									<td>${fn:replace(fn:replace(vo.email, ">", "&gt;"), "<", "&lt;")}</td>
+									<td>${fn:replace(fn:replace(vo.gender, ">", "&gt;"), "<", "&lt;")}</td>
+									<td>${fn:replace(fn:replace(vo.joinDate, ">", "&gt;"), "<", "&lt;")}</td>
+									<td>${fn:replace(fn:replace(vo.role, ">", "&gt;"), "<", "&lt;")}</td>
+								</tr>
+							</table>
+						</c:forEach>
+					</ul>			
 
 				</div>
 			</div>

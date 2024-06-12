@@ -1,5 +1,6 @@
 package com.poscodx.mysite.repository;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -33,6 +34,10 @@ public class UserRepository {
 
 	public UserVo findByEmail(String email) {
 		return sqlSession.selectOne("user.findByEmail", email);
+	}
+
+	public List<UserVo> findAll() {
+		return sqlSession.selectList("user.findAll");
 	}
 
 	

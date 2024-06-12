@@ -1,5 +1,7 @@
 package com.poscodx.mysite.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +31,9 @@ public class UserService {
 
 	public UserVo getUser(String email) {
 		return userRepository.findByEmail(email);
+	}
+
+	public List<UserVo> getUserList() {
+		return userRepository.findAll();
 	}
 }

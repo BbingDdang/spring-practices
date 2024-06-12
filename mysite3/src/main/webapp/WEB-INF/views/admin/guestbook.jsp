@@ -28,7 +28,7 @@
 									<td>${fn:replace(fn:replace(vo.name, ">", "&gt;"), "<", "&lt;")}</td>
 									<td>${fn:replace(fn:replace(vo.reg_time, ">", "&gt;"), "<", "&lt;")}</td>
 									<td><a
-										href="${pageContext.request.contextPath}/guestbook/delete/${vo.no}">삭제</a></td>
+										href="${pageContext.request.contextPath}/admin/guestbook/delete/${vo.no}">삭제</a></td>
 								</tr>
 								<tr>
 									<td colspan=4>
