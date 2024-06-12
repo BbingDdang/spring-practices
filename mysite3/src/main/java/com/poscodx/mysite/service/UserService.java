@@ -1,7 +1,5 @@
 package com.poscodx.mysite.service;
 
-import java.sql.SQLException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +25,9 @@ public class UserService {
 
 	public void update(UserVo vo) {
 		userRepository.update(vo);
+	}
+
+	public UserVo getUser(String email) {
+		return userRepository.findByEmail(email);
 	}
 }

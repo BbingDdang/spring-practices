@@ -1,5 +1,7 @@
 package com.poscodx.mysite.controller;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.poscodx.mysite.security.Auth;
 import com.poscodx.mysite.service.FileUploadService;
+import com.poscodx.mysite.service.GuestbookService;
 import com.poscodx.mysite.service.SiteService;
+import com.poscodx.mysite.vo.GuestbookVo;
 import com.poscodx.mysite.vo.SiteVo;
 
 
@@ -24,6 +28,9 @@ public class AdminController {
 	
 	@Autowired
 	private SiteService siteService;
+	
+	@Autowired
+	private GuestbookService guestbookService;
 	
 	@Autowired
 	private FileUploadService fileUploadService;
@@ -49,9 +56,12 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/guestbook")
-	public String guestbook() {
+	public String guestbook(Model model) {
+		List<GuestbookVo> list = guestbookService.getContentsList();
+		model.addAttribute("list", list);
 		return "admin/guestbook";
 	}
+	
 	
 	@RequestMapping("/board")
 	public String board() {
