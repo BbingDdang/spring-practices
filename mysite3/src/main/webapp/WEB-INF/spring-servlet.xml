@@ -17,22 +17,24 @@
 	<mvc:annotation-driven>
 		<!-- MessageConverters -->
 		<mvc:message-converters>
-			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-			    <property name="supportedMediaTypes">
-			        <list>
-			             <value>text/html; charset=UTF-8</value>
-			        </list>
-			    </property>
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+					</list>
+				</property>
 			</bean>
-			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-			   <property name="supportedMediaTypes">
-			       <list>
-			            <value>application/json; charset=UTF-8</value>
-			        </list>
-			   </property>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json; charset=UTF-8</value>
+					</list>
+				</property>
 			</bean>
 		</mvc:message-converters>
-	
+
 		<!-- ArgumentResolver등록 -->
 		<mvc:argument-resolvers>
 			<bean
@@ -67,7 +69,7 @@
 			<bean class="com.poscodx.mysite.security.AuthInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/**"/>
+			<mvc:mapping path="/**" />
 			<bean class="com.poscodx.mysite.interceptor.SiteInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
@@ -86,34 +88,44 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- MessageSource -->
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
-	   		<list>
-				<value>messages/message_en</value>
-				<value>messages/message_ko</value>
+			<list>
+				<value>messages/message</value>
+				<!-- <value>messages/message_ko</value> -->
 			</list>
 		</property>
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
-	
+	<!-- Locale Resolver -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieName" value="lang" />
+		<property name="cookieHttpOnly" value="false" />
+	</bean>
+
 	<!-- Multipart Resolver -->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 최대업로드 가능한 바이트크기 -->
-		<property name="maxUploadSize" value="52428800" />		
+		<property name="maxUploadSize" value="52428800" />
 		<!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
-		<property name="maxInMemorySize" value="52428800" />		
+		<property name="maxInMemorySize" value="52428800" />
 		<!-- defaultEncoding -->
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
-	
+
 	<!-- mvc url-resource mapping -->
-	<mvc:resources mapping="/assets/upload-images/**" location="file:/Users/imbyeongjun/mysite-uploads/" />
+	<mvc:resources mapping="/assets/upload-images/**"
+		location="file:/Users/imbyeongjun/mysite-uploads/" />
 
 	<!-- ApplicationContextEventListener -->
-	<bean class="com.poscodx.mysite.event.ApplicationContextEventListener" />
-	
+	<bean
+		class="com.poscodx.mysite.event.ApplicationContextEventListener" />
+
 	<context:annotation-config />
 	<context:component-scan
 		base-package="com.poscodx.mysite.controller, com.poscodx.mysite.exception" />

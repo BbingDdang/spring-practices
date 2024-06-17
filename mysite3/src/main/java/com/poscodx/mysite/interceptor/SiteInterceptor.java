@@ -3,13 +3,18 @@ package com.poscodx.mysite.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.LocaleResolver;
 
 import com.poscodx.mysite.service.SiteService;
 import com.poscodx.mysite.vo.SiteVo;
 
 public class SiteInterceptor implements HandlerInterceptor {
-
+	@Autowired
+	private LocaleResolver localeResolver;
+	
+	@Autowired
 	private SiteService siteService;
 	
 	public SiteInterceptor(SiteService siteService) {
@@ -24,6 +29,12 @@ public class SiteInterceptor implements HandlerInterceptor {
 			siteVo = siteService.getSite();
 			request.getServletContext().setAttribute("sitevo", siteVo);
 		}
+		
+		
+		System.out.println("resolever-locale : " + localeResolver.resolveLocale(request).getLanguage());
+		
+		
+		//Locale
 		
 		return true;
 	}
